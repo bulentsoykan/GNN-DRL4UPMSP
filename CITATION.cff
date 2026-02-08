@@ -1,0 +1,58 @@
+# ABOUTME: Citation metadata for this software project.
+# ABOUTME: Follow this format when citing in academic work.
+
+cff-version: 1.2.0
+title: "Graph-Enhanced Deep Reinforcement Learning for Multi-Objective Unrelated Parallel Machine Scheduling"
+message: "If you use this software, please cite it using the metadata from this file."
+type: software
+authors:
+  - family-names: Soykan
+    given-names: Bulent
+    email: bulent.soykan@ucf.edu
+    affiliation: University of Central Florida
+    orcid: https://orcid.org/0000-0000-0000-0000
+  - family-names: Mondesire
+    given-names: Sean
+    affiliation: University of Central Florida
+  - family-names: Rabadi
+    given-names: Ghaith
+    affiliation: University of Central Florida
+  - family-names: Bochenek
+    given-names: Grace
+    affiliation: University of Central Florida
+repository-code: "https://github.com/bulentsoykan/GNN-DRL4UPMSP"
+license: MIT
+version: "1.0.0"
+date-released: "2026-02-08"
+keywords:
+  - deep reinforcement learning
+  - graph neural networks
+  - parallel machine scheduling
+  - multi-objective optimization
+  - proximal policy optimization
+  - combinatorial optimization
+abstract: >-
+  Implementation of a novel Deep Reinforcement Learning framework for
+  solving the Unrelated Parallel Machine Scheduling Problem (UPMSP) with
+  multiple objectives. The approach combines Proximal Policy Optimization
+  (PPO) with Heterogeneous Graph Neural Networks (GNN) to simultaneously
+  minimize Total Weighted Tardiness (TWT) and Total Setup Time (TST).
+  Handles complex real-world constraints including job-specific release
+  dates, machine eligibility restrictions, and sequence-dependent
+  machine-dependent setup times.
+preferred-citation:
+  type: conference-paper
+  title: "Graph-Enhanced Deep Reinforcement Learning for Multi-Objective Unrelated Parallel Machine Scheduling"
+  authors:
+    - family-names: Soykan
+      given-names: Bulent
+    - family-names: Mondesire
+      given-names: Sean
+    - family-names: Rabadi
+      given-names: Ghaith
+    - family-names: Bochenek
+      given-names: Grace
+  collection-title: "2025 Winter Simulation Conference (WSC)"
+  year: 2025
+  publisher:
+    name: IEEE
