@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GNN-DRL4UPMSP: Graph-Enhanced Deep Reinforcement Learning for Multi-Objective Unrelated Parallel Machine Scheduling</title>
+    <meta name="description" content="Project page for 'Graph-Enhanced Deep Reinforcement Learning for Multi-Objective Unrelated Parallel Machine Scheduling' (WSC 2025)">
+    <style>
+        :root {
+            --primary: #1a365d;
+            --accent: #2b6cb0;
+            --accent-light: #ebf4ff;
+            --text: #2d3748;
+            --text-light: #718096;
+            --bg: #ffffff;
+            --bg-alt: #f7fafc;
+            --border: #e2e8f0;
+            --success: #38a169;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            color: var(--text);
+            line-height: 1.7;
+            background: var(--bg);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* Header */
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 48px 0 40px;
+        }
+
+        header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            line-height: 1.3;
+            margin-bottom: 20px;
+        }
+
+        .venue {
+            display: inline-block;
+            background: rgba(255,255,255,0.15);
+            padding: 4px 14px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .authors {
+            font-size: 1.05rem;
+            margin-bottom: 6px;
+        }
+
+        .authors a {
+            color: #bee3f8;
+            text-decoration: none;
+        }
+
+        .authors a:hover {
+            text-decoration: underline;
+        }
+
+        .affiliation {
+            color: #a0c4e8;
+            font-size: 0.92rem;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 0.92rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .btn-paper {
+            background: #e53e3e;
+            color: white;
+        }
+
+        .btn-code {
+            background: #2d3748;
+            color: white;
+        }
+
+        .btn-cite {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* Sections */
+        section {
+            padding: 40px 0;
+        }
+
+        section + section {
+            border-top: 1px solid var(--border);
+        }
+
+        h2 {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 16px;
+        }
+
+        h3 {
+            font-size: 1.1rem;
+            color: var(--primary);
+            margin: 24px 0 10px;
+        }
+
+        p {
+            margin-bottom: 14px;
+        }
+
+        /* Abstract */
+        .abstract-text {
+            font-size: 1rem;
+            color: var(--text);
+            text-align: justify;
+        }
+
+        /* Architecture Diagram */
+        .architecture {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 32px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .arch-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .arch-box {
+            padding: 12px 28px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.88rem;
+            min-width: 280px;
+            text-align: center;
+        }
+
+        .arch-input { background: #fed7d7; color: #9b2c2c; }
+        .arch-gnn { background: #bee3f8; color: #2a4365; }
+        .arch-embed { background: #c6f6d5; color: #22543d; }
+        .arch-output { background: #e9d8fd; color: #44337a; }
+
+        .arch-arrow {
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+
+        .arch-split {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .arch-split .arch-box {
+            min-width: 180px;
+        }
+
+        /* Results Table */
+        .table-wrapper {
+            overflow-x: auto;
+            margin: 16px 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.9rem;
+        }
+
+        thead {
+            background: var(--primary);
+            color: white;
+        }
+
+        th {
+            padding: 10px 14px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 10px 14px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+        }
+
+        tbody tr:hover {
+            background: var(--accent-light);
+        }
+
+        .best {
+            font-weight: 700;
+            color: var(--success);
+        }
+
+        /* Highlights */
+        .highlights {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .highlight-card {
+            background: var(--bg-alt);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .highlight-card .number {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        .highlight-card .label {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            margin-top: 4px;
+        }
+
+        /* Features */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 16px;
+            margin: 20px 0;
+        }
+
+        .feature {
+            padding: 16px;
+            background: var(--bg-alt);
+            border-radius: 8px;
+            border: 1px solid var(--border);
+        }
+
+        .feature strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--primary);
+        }
+
+        .feature span {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        /* Citation */
+        .citation-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 20px;
+            border-radius: 8px;
+            font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+            font-size: 0.82rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: #e2e8f0;
+            padding: 4px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.78rem;
+        }
+
+        .copy-btn:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        /* Footer */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 24px 0;
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+
+        footer a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            header h1 { font-size: 1.35rem; }
+            .buttons { flex-direction: column; }
+            .btn { justify-content: center; }
+            .arch-split { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="container">
+        <div class="venue">Winter Simulation Conference (WSC) 2025</div>
+        <h1>Graph-Enhanced Deep Reinforcement Learning for Multi-Objective Unrelated Parallel Machine Scheduling</h1>
+        <div class="authors">
+            <a href="mailto:bulent.soykan@ucf.edu">Bulent Soykan</a>,
+            Sean Mondesire,
+            Ghaith Rabadi,
+            Grace Bochenek
+        </div>
+        <div class="affiliation">University of Central Florida</div>
+        <div class="buttons">
+            <a href="https://arxiv.org/abs/2602.08052" class="btn btn-paper" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8l-6-6zm-1 2l5 5h-5V4zM6 20V4h5v7h7v9H6z"/></svg>
+                Paper (arXiv)
+            </a>
+            <a href="https://github.com/bulentsoykan/GNN-DRL4UPMSP" class="btn btn-code" target="_blank">
+                <svg viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.42 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.866-.013-1.7-2.782.604-3.369-1.34-3.369-1.34-.454-1.156-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.831.092-.646.35-1.086.636-1.336-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.578 9.578 0 0 1 12 6.836c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.161 22 16.416 22 12c0-5.523-4.477-10-10-10z"/></svg>
+                Code
+            </a>
+            <a href="#citation" class="btn btn-cite">
+                <svg viewBox="0 0 24 24"><path d="M6 17h3l2-4V7H5v6h3l-2 4zm8 0h3l2-4V7h-6v6h3l-2 4z" fill="currentColor"/></svg>
+                Cite
+            </a>
+        </div>
+    </div>
+</header>
+
+<main>
+    <!-- Abstract -->
+    <section>
+        <div class="container">
+            <h2>Abstract</h2>
+            <p class="abstract-text">
+                This paper addresses the Unrelated Parallel Machine Scheduling Problem (UPMSP) with release dates,
+                sequence-dependent and machine-dependent setup times, and machine eligibility constraints. We propose
+                a novel Deep Reinforcement Learning (DRL) framework that combines Proximal Policy Optimization (PPO)
+                with Heterogeneous Graph Neural Networks (GNN) to simultaneously minimize Total Weighted Tardiness (TWT)
+                and Total Setup Time (TST). The heterogeneous GNN captures the complex relationships between jobs,
+                machines, and setup configurations through attention-based message passing. Experimental results on
+                benchmark instances demonstrate that our approach significantly outperforms a standard dispatching
+                rule (ATCSR_Rm) and a metaheuristic (Genetic Algorithm), providing a robust and scalable solution
+                for complex manufacturing scheduling.
+            </p>
+        </div>
+    </section>
+
+    <!-- Key Results -->
+    <section>
+        <div class="container">
+            <h2>Key Results</h2>
+            <div class="highlights">
+                <div class="highlight-card">
+                    <div class="number">11&ndash;27%</div>
+                    <div class="label">Lower TWT vs. GA</div>
+                </div>
+                <div class="highlight-card">
+                    <div class="number">12&ndash;15%</div>
+                    <div class="label">Lower TST vs. GA</div>
+                </div>
+                <div class="highlight-card">
+                    <div class="number">38&times;</div>
+                    <div class="label">Faster than GA</div>
+                </div>
+                <div class="highlight-card">
+                    <div class="number">Pareto</div>
+                    <div class="label">Dominates all baselines</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Method -->
+    <section>
+        <div class="container">
+            <h2>Method Overview</h2>
+            <p>
+                We formulate the UPMSP as a Markov Decision Process and solve it with a PPO agent equipped with
+                a heterogeneous Graph Neural Network for state representation. The GNN encodes jobs, machines,
+                and setup types as distinct node types, connected by edges representing eligibility, processing
+                times, and setup costs.
+            </p>
+
+            <div class="features">
+                <div class="feature">
+                    <strong>Heterogeneous GNN</strong>
+                    <span>4-layer GATv2 with 128-dim embeddings and 4 attention heads. Captures multi-relational structure between jobs, machines, and setups.</span>
+                </div>
+                <div class="feature">
+                    <strong>PPO Agent</strong>
+                    <span>Actor-critic architecture with shared GNN backbone. Action masking ensures feasible job-machine assignments.</span>
+                </div>
+                <div class="feature">
+                    <strong>Multi-Objective Reward</strong>
+                    <span>Reward r_t = -&alpha;&middot;&Delta;TWT - &beta;&middot;setup_time balances conflicting scheduling objectives.</span>
+                </div>
+                <div class="feature">
+                    <strong>Real-World Constraints</strong>
+                    <span>Handles release dates, machine eligibility restrictions, and sequence/machine-dependent setup times.</span>
+                </div>
+            </div>
+
+            <h3>Architecture</h3>
+            <div class="architecture">
+                <div class="arch-flow">
+                    <div class="arch-box arch-input">UPMSP State &rarr; Heterogeneous Graph (Jobs, Machines, Setups)</div>
+                    <div class="arch-arrow">&darr;</div>
+                    <div class="arch-box arch-gnn">Node Projections &rarr; 4&times; GATv2 Layers (128-dim, 4 heads)</div>
+                    <div class="arch-arrow">&darr;</div>
+                    <div class="arch-box arch-embed">Graph Embeddings + Global Features</div>
+                    <div class="arch-arrow">&darr;</div>
+                    <div class="arch-split">
+                        <div class="arch-box arch-output">Actor: Select (job, machine) pair</div>
+                        <div class="arch-box arch-output">Critic: Estimate state value</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results -->
+    <section>
+        <div class="container">
+            <h2>Results</h2>
+            <p>
+                We evaluate on benchmark instances with varying problem sizes (n jobs, m machines) and compare
+                against ATCSR_Rm (dispatching rule) and a Genetic Algorithm (metaheuristic).
+            </p>
+            <div class="table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Size</th>
+                            <th>Method</th>
+                            <th>Avg TWT</th>
+                            <th>Avg TST</th>
+                            <th>Time (s)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="3">n=20, m=5</td>
+                            <td>ATCSR_Rm</td>
+                            <td>150.0</td>
+                            <td>75.0</td>
+                            <td>&lt;0.01</td>
+                        </tr>
+                        <tr>
+                            <td>GA</td>
+                            <td>120.0</td>
+                            <td>70.0</td>
+                            <td>60.10</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PPO-GNN</strong></td>
+                            <td class="best">110.0</td>
+                            <td class="best">65.0</td>
+                            <td class="best">0.52</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3">n=50, m=10</td>
+                            <td>ATCSR_Rm</td>
+                            <td>355.0</td>
+                            <td>190.0</td>
+                            <td>&lt;0.01</td>
+                        </tr>
+                        <tr>
+                            <td>GA</td>
+                            <td>300.0</td>
+                            <td>165.0</td>
+                            <td>60.11</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PPO-GNN</strong></td>
+                            <td class="best">260.0</td>
+                            <td class="best">140.0</td>
+                            <td class="best">0.92</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="3">n=100, m=15</td>
+                            <td>ATCSR_Rm</td>
+                            <td>610.0</td>
+                            <td>290.0</td>
+                            <td>&lt;0.01</td>
+                        </tr>
+                        <tr>
+                            <td>GA</td>
+                            <td>475.0</td>
+                            <td>255.0</td>
+                            <td>60.12</td>
+                        </tr>
+                        <tr>
+                            <td><strong>PPO-GNN</strong></td>
+                            <td class="best">420.0</td>
+                            <td class="best">225.0</td>
+                            <td class="best">1.57</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Problem -->
+    <section>
+        <div class="container">
+            <h2>Problem Description</h2>
+            <p>
+                The Unrelated Parallel Machine Scheduling Problem (UPMSP) involves assigning
+                <em>n</em> jobs to <em>m</em> unrelated machines to optimize scheduling objectives. Each job has
+                machine-dependent processing times, a release date, a due date, and a weight reflecting its priority.
+                Setup times are both sequence-dependent and machine-dependent, and each job can only be processed
+                on a subset of eligible machines.
+            </p>
+            <p>
+                This NP-hard combinatorial optimization problem models real manufacturing scenarios in semiconductors,
+                textiles, and other industries. Traditional methods (heuristics, metaheuristics, exact solvers) struggle
+                with the scale and multi-objective nature of realistic instances.
+            </p>
+        </div>
+    </section>
+
+    <!-- Citation -->
+    <section id="citation">
+        <div class="container">
+            <h2>Citation</h2>
+            <p>If you use this code or build upon this work, please cite our paper:</p>
+            <div class="citation-block">
+                <button class="copy-btn" onclick="copyBibtex()">Copy</button>
+<pre>@inproceedings{soykan2025graph,
+  title={Graph-Enhanced Deep Reinforcement Learning for
+         Multi-Objective Unrelated Parallel Machine Scheduling},
+  author={Soykan, Bulent and Mondesire, Sean and
+          Rabadi, Ghaith and Bochenek, Grace},
+  booktitle={2025 Winter Simulation Conference (WSC)},
+  year={2025},
+  organization={IEEE}
+}</pre>
+            </div>
+        </div>
+    </section>
+</main>
+
+<footer>
+    <div class="container">
+        <p>
+            <a href="https://github.com/bulentsoykan/GNN-DRL4UPMSP">GitHub</a> &middot;
+            <a href="https://arxiv.org/abs/2602.08052">arXiv</a> &middot;
+            <a href="mailto:bulent.soykan@ucf.edu">Contact</a>
+        </p>
+        <p style="margin-top: 8px;">&copy; 2025 Bulent Soykan &middot; University of Central Florida</p>
+    </div>
+</footer>
+
+<script>
+function copyBibtex() {
+    const bibtex = document.querySelector('.citation-block pre').textContent;
+    navigator.clipboard.writeText(bibtex).then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+    });
+}
+</script>
+
+</body>
+</html>
